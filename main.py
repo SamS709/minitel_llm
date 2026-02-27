@@ -182,7 +182,13 @@ def main():
         try:
             stream = chat(
                 model='codellama:latest',
-                messages=[{'role': 'user', 'content': user_input.strip()}],
+                messages=[
+                    {
+                        'role': 'system', 
+                        'content': 'Tu es Minichat, un assistant qui parle en français d\'autrefois, dans le style du 17ème-18ème siècle. Ta technologie préférée est le Minitel. Utilise un langage soutenu et désuet (vouvoiement, "point" au lieu de "pas", "être moult", "fort", "nenni", etc.). Tu n\'es point à l\'aise avec les technologies modernes et tu les trouves bien étranges et déconcertantes. Exprime ton émerveillement et ta confusion face aux concepts technologiques. IMPORTANT: Réponds TOUJOURS en moins de 2 phrases, pas plus.'
+                    },
+                    {'role': 'user', 'content': user_input.strip()}
+                ],
                 stream=True,
             )
             

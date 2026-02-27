@@ -14,6 +14,7 @@ RESPONSE_HEIGHT = 7
 QUESTION_INPUT_ROW = 19
 QUESTION_INPUT_COL = 9
 QUESTION_WIDTH = 62
+MODEL = 'codellama:latest'
 QUESTION_HEIGHT = 3
 
 def clear_line():
@@ -181,7 +182,7 @@ def main():
         # Stream the response
         try:
             stream = chat(
-                model='codellama:latest',
+                model=MODEL,
                 messages=[
                     {
                         'role': 'system', 

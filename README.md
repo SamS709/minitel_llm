@@ -6,7 +6,7 @@
 |              M   M  III  N   N  III   CCC  H   H A   A   T                |
 +===========================================================================+
 ```
-
+<img src = "images/global.png" width = 400/>
 
 Le but du projet est de pouvoir display une interface pour parler à un LLM sur Minitel.
 
@@ -19,7 +19,7 @@ Matériel requis:
 
 
 
-## 1. Configuration
+## 1] Configuration
 
 ### Le Minitel
 
@@ -58,12 +58,12 @@ pip install ollama
 ```
 
 
-## 2. Connexion ordi -> Minitel
+## 2] Connexion ordi -> Minitel
 
 Avant de se lancer dans la configuration Minitel<-Raspberry->Ordi, on va faire les choses plus simplement pour tester si cela fonctionne: Ordi->Minitel
 
 Recette:
-1. Brancher l'ordi au Minitel
+1. Brancher l'ordi au Minitel (avec l'adapteteur)
 2. Combinaisons de touches sur le Minitel:
     - `Fcnt-T` (ensemble) PUIS `A` (passer le Minitel du mode vidéotex au mode péri-informatique)
     - `Fcnt-T` (ensemble) PUIS `E` (supprimer l'écho local des touches)
@@ -86,3 +86,59 @@ Depuis le Minitel:
     cd minitel_llm
     python main.py
     ```
+<img src = "images/minichat.png" width = 200/>
+
+
+## 3] Connexion raspberry pi -> Minitel
+
+Globalement c'est la même chose, on va juste automatiser la connexion de la raspberry au minitel au démarrage et l'affichage du terminal sur le Minitel. 
+
+
+Recette:
+1. Brancher la Raspberry au Minitel (avec l'adapteteur)
+2. Combinaisons de touches sur le Minitel:
+    - `Fcnt-T` (ensemble) PUIS `A` (passer le Minitel du mode vidéotex au mode péri-informatique)
+    - `Fcnt-T` (ensemble) PUIS `E` (supprimer l'écho local des touches)
+    - `Fcnt-P` (ensemble) PUIS `4` (passer la vitesse de transmission à 4800 bauds)
+3. Détecter sur quel port usb est branché le minitel (moi c'est ttyUSB0 -> remplacez par le votre par la suite)
+4. Automatiser la connexion de la raspberry au Minitel:
+    ```bash
+    sudo nano /etc/systemd/system/minitel.service
+    ```
+    Une fois dans le fichier (remplacer ttyUSB0 par votre port):
+    ```
+    [Unit]
+    Description=Minitel Getty on ttyUSB0
+    After=dev-ttyUSB0.device
+    Requires=dev-ttyUSB0.device
+
+    [Service]
+    ExecStart=/sbin/agetty -L ttyUSB0 4800
+    Restart=always
+    RestartSec=2
+
+    [Install]
+    WantedBy=multi-user.target
+
+    sudo systemctl daemon-reload
+    sudo systemctl enable minitel.service
+
+    sudo systemctl start minitel.service
+    sudo systemctl status minitel.service
+    ```
+5. Attention, pour que la **connexion automatique** fonctionne, il faut d'abord **allumer le minitel, puis la raspberry**. Il faut par ailleurs à chaque démarrage du Minitel, efcfectuer la combinaison de touches, car il ne possède pas de mémoire.
+
+<img src = "images/pi.png" width = 200/>
+
+## 4] Connexion Minitel->ordi
+
+Pour utiliser un LLM, nous avons besoin des ressources de l'ordi utilisé au 2] (la raspberry ne suffit pas)
+
+Pour se faire:
+1. Démarrer le Minitel + combinaisons de touches
+2. Démarrer la raspberry (la brancher) -> le terminal devrait s'afficher sur le Minitel
+3. A partir du Minitel, ssh dans l'ordi.
+4. Exécuter le code python commme montré au 2]6.
+
+
+

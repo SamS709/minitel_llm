@@ -5,7 +5,8 @@
 |              M M M   I   N N N   I   C     HHHHH AAAAA   T                |
 |              M   M  III  N   N  III   CCC  H   H A   A   T                |
 +===========================================================================+
-```
+```  
+<br />
 <img src = "images/global.png" width = 400/>
 
 Le but du projet est de pouvoir display une interface pour parler à un LLM sur Minitel.
@@ -17,17 +18,17 @@ Matériel requis:
 - un **minitel** 
 - un **adaptateur** dim 5 broches -> usb
 
+<br />
 
+# 1] Configuration
 
-## 1] Configuration
-
-### Le Minitel
+## Le Minitel
 
 **ATTENTION**, le Minitel doit avoir:
 - un touche `Fnct`
 - une prise dim 5 broches
 
-### L'adaptateur
+## L'adaptateur
 
 Il existe des ressources pour construire son adaptateur:
 - https://pila.fr/wordpress/?p=361
@@ -35,15 +36,15 @@ Il existe des ressources pour construire son adaptateur:
 
 J'ai opté pour la méthode du flemmard: ['toutelectrique46'](https://toutelectrique46.tk/) fournit l'adaptateur déjà assemblé.
 
-### L'ordi
+## L'ordi
 
 Testé sur ubuntu 24.04
 
-### La raspberry
+## La raspberry
 
 Testé sur ubuntu 22.04
 
-### Installation du projet
+## Installation du projet
 
 Ollama doit être installé sur votre Ordi.
 
@@ -56,9 +57,9 @@ Préférez un environnement python virtuel sous python=3.10
 ```bash
 pip install ollama
 ```
+<br />
 
-
-## 2] Connexion ordi -> Minitel
+# 2] Connexion ordi -> Minitel
 
 Avant de se lancer dans la configuration Minitel<-Raspberry->Ordi, on va faire les choses plus simplement pour tester si cela fonctionne: Ordi->Minitel
 
@@ -87,9 +88,10 @@ Depuis le Minitel:
     python main.py
     ```
 <img src = "images/minichat.png" width = 200/>
+<br />
+<br />
 
-
-## 3] Connexion raspberry pi -> Minitel
+# 3] Connexion raspberry pi -> Minitel
 
 Globalement c'est la même chose, on va juste automatiser la connexion de la raspberry au minitel au démarrage et l'affichage du terminal sur le Minitel. 
 
@@ -126,11 +128,16 @@ Recette:
     sudo systemctl start minitel.service
     sudo systemctl status minitel.service
     ```
-5. Attention, pour que la **connexion automatique** fonctionne, il faut d'abord **allumer le minitel, puis la raspberry**. Il faut par ailleurs à chaque démarrage du Minitel, efcfectuer la combinaison de touches, car il ne possède pas de mémoire.
+5. Attention, pour que la **connexion automatique** fonctionne, il faut d'abord **allumer le minitel, puis la raspberry**. Il faut par ailleurs à chaque démarrage du Minitel, efcfectuer la combinaison de touches, car il ne possède pas de mémoire.  
 
-<img src = "images/pi.png" width = 200/>
+<br />
 
-## 4] Connexion Minitel->ordi
+<img src = "images/pi.png" width = 200/>  
+<br />
+<br />
+<br />
+
+# 4] Connexion Minitel->ordi 
 
 Pour utiliser un LLM, nous avons besoin des ressources de l'ordi utilisé au 2] (la raspberry ne suffit pas)
 
@@ -139,6 +146,20 @@ Pour se faire:
 2. Démarrer la raspberry (la brancher) -> le terminal devrait s'afficher sur le Minitel
 3. A partir du Minitel, ssh dans l'ordi.
 4. Exécuter le code python commme montré au 2]6.
+
+
+
+# Sources et liens utiles
+
+### Config miitel / ordi
+- https://www.furrtek.org/index.php?a=telinux
+- https://lea-linux.org/documentations/Utilisation_d%27un_Minitel_comme_terminal
+- https://pila.fr/wordpress/?p=361
+- https://x0r.fr/blog/5
+
+### Achat câble(s)
+- https://toutelectrique46.tk/
+- https://www.tindie.com/stores/iodeo/ (souvent en rupture de stock)
 
 
 

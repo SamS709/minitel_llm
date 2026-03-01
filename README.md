@@ -6,7 +6,6 @@
 |              M   M  III  N   N  III   CCC  H   H A   A   T                |
 +===========================================================================+
 ```  
-<br />
 <img src = "images/global.png" width = 400/>
 
 Le but du projet est de pouvoir display une interface pour parler à un LLM sur Minitel.
@@ -18,7 +17,6 @@ Matériel requis:
 - un **minitel** 
 - un **adaptateur** dim 5 broches -> usb
 
-<br />
 
 # 1] Configuration
 
@@ -57,7 +55,6 @@ Préférez un environnement python virtuel sous python=3.10
 ```bash
 pip install ollama
 ```
-<br />
 
 # 2] Connexion ordi -> Minitel
 
@@ -88,8 +85,7 @@ Depuis le Minitel:
     python main.py
     ```
 <img src = "images/minichat.png" width = 200/>
-<br />
-<br />
+
 
 # 3] Connexion raspberry pi -> Minitel
 
@@ -130,12 +126,7 @@ Recette:
     ```
 5. Attention, pour que la **connexion automatique** fonctionne, il faut d'abord **allumer le minitel, puis la raspberry**. Il faut par ailleurs à chaque démarrage du Minitel, efcfectuer la combinaison de touches, car il ne possède pas de mémoire.  
 
-<br />
-
 <img src = "images/pi.png" width = 200/>  
-<br />
-<br />
-<br />
 
 # 4] Connexion Minitel->ordi 
 
@@ -146,8 +137,6 @@ Pour se faire:
 2. Démarrer la raspberry (la brancher) -> le terminal devrait s'afficher sur le Minitel
 3. A partir du Minitel, ssh dans l'ordi.
 4. Exécuter le code python commme montré au 2]6.
-
-
 
 # Sources et liens utiles
 

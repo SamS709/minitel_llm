@@ -14,7 +14,7 @@ RESPONSE_HEIGHT = 7
 QUESTION_INPUT_ROW = 19
 QUESTION_INPUT_COL = 9
 QUESTION_WIDTH = 62
-MODEL = 'codellama:latest'
+MODEL = 'mistral:latest'
 QUESTION_HEIGHT = 3
 
 def clear_line():
@@ -47,70 +47,13 @@ def remove_accents(text):
     return ''.join(char for char in nfd if unicodedata.category(char) != 'Mn')
 
 def get_multi_line_input(start_row, start_col, width, max_height):
-    """Get input with automatic line wrapping"""
-    user_text = ""
-    current_row = start_row
-    current_col = start_col
-    max_length = width * max_height
-    
-    # Get terminal settings
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-    
+    """Get input respecting terminal encoding configuration"""
+    # Use standard input() which respects the terminal's encoding settings
     try:
-        # Set terminal to raw mode
-        tty.setraw(fd)
-        
-        while True:
-            # Read one character
-            char = sys.stdin.read(1)
-            
-            # Handle Enter (newline)
-            if char == '\n' or char == '\r':
-                break
-            
-            # Handle backspace/delete
-            elif char in ('\x7f', '\x08'):
-                if len(user_text) > 0:
-                    user_text = user_text[:-1]
-                    # Move cursor back
-                    if current_col > start_col:
-                        current_col -= 1
-                    else:
-                        # Move to previous line
-                        current_row -= 1
-                        current_col = start_col + width - 1
-                    
-                    move_cursor(current_row, current_col)
-                    print(' ', end='', flush=True)
-                    move_cursor(current_row, current_col)
-            
-            # Handle Ctrl+C
-            elif char == '\x03':
-                raise KeyboardInterrupt
-            
-            # Handle regular characters
-            elif ord(char) >= 32:
-                # Check if we've reached the maximum length
-                if len(user_text) >= max_length:
-                    # Don't add the character, but keep listening for input
-                    continue
-                
-                user_text += char
-                print(char, end='', flush=True)
-                current_col += 1
-                
-                # Check if we need to wrap to next line
-                if current_col >= start_col + width:
-                    current_row += 1
-                    current_col = start_col
-                    move_cursor(current_row, current_col)
-        
+        user_text = input()
         return user_text
-    
-    finally:
-        # Restore terminal settings
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    except EOFError:
+        return ""
 
 def print_header():
     """Print ASCII art header"""
@@ -157,11 +100,11 @@ def main():
 
     
     while True:
-        # Clear question input area and position cursor
+        # Position cursor for question input
         clear_rectangle(QUESTION_INPUT_COL, QUESTION_INPUT_ROW, QUESTION_WIDTH, QUESTION_HEIGHT)
         move_cursor(QUESTION_INPUT_ROW, QUESTION_INPUT_COL)
         
-        # Get user input with automatic wrapping
+        # Get user input
         user_input = get_multi_line_input(QUESTION_INPUT_ROW, QUESTION_INPUT_COL, QUESTION_WIDTH, QUESTION_HEIGHT)
         
         # Exit command

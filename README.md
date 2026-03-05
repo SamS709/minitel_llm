@@ -117,6 +117,10 @@ Recette:
 
     [Install]
     WantedBy=multi-user.target
+    ```
+    Après avoir sauvegardé les changements, dans un terminal, exécuter:
+
+    ```
 
     sudo systemctl daemon-reload
     sudo systemctl enable minitel.service

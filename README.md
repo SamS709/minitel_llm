@@ -1,3 +1,5 @@
+# Branche à l'attention du Techlab des Mines de Nancy
+
 ```
 +===========================================================================+
 |              M   M  III  N   N  III   CCC  H   H   A   TTTTT              |
@@ -7,6 +9,24 @@
 +===========================================================================+
 ```  
 <img src = "images/global.png" width = 400/>
+
+## 1. Mode d'emploi
+
+1. Brancher la Raspberry au Minitel (avec l'adapteteur)
+2. Faire ces combinaisons de touches sur le Minitel:
+    - `Fcnt-T` (ensemble) PUIS `A` (passer le Minitel du mode vidéotex au mode péri-informatique)
+    - `Fcnt-T` (ensemble) PUIS `E` (supprimer l'écho local des touches)
+    - `Fcnt-P` (ensemble) PUIS `4` (passer la vitesse de transmission à 4800 bauds)
+3. Allumer la Raspberry. Se connecter.
+4. Une fois connecté, dans le terminal, tapper:
+    ```
+    connect
+    ```
+    Cela va SSH automatiquement dans l'ordi
+5. Une fois la connexion SSH établie, tapper:
+    ```
+    llm
+    ```
 
 Le but du projet est de pouvoir display une interface pour parler à un LLM sur Minitel.
 
